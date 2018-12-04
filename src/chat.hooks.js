@@ -29,5 +29,11 @@ export function withMessages() {
         ChatEngine.global.off("message", handleMessage);
     }
   });
-  return [messages]
+  
+  function sendMessage(message) {
+    ChatEngine.global.emit("message", {
+        text: message
+      });
+  }
+  return [messages, sendMessage]
 }
