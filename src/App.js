@@ -1,7 +1,11 @@
 import React, { Component } from "react";
+
 // import logo from "./logo.svg";
 // import ChatEngineCore from "chat-engine";
 import "./App.css";
+import { getChatEngine } from './chat-engine';
+
+const ChatEngine = getChatEngine();
 
 class App extends Component {
   constructor(props) {
@@ -14,8 +18,8 @@ class App extends Component {
   }
 
   componentDidMount() {
-    debugger;
-    this.chatEngine.global.on("message", payload => {
+
+    ChatEngine.global.on("message", payload => {
       let messages = this.state.messages;
       
       messages.push({
@@ -32,7 +36,7 @@ class App extends Component {
   }
   sendChat() {
     if (this.state.chatInput) {
-      this.chatEngine.global.emit("message", {
+      ChatEngine.global.emit("message", {
         text: this.state.chatInput
       });
       this.setState({ chatInput: "" });
@@ -65,5 +69,8 @@ class App extends Component {
     );
   }
 }
+//const App = () => {
+//  return (<div>Hi</div>)
+// }
 
 export default App;
