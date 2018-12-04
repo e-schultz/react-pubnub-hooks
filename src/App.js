@@ -1,13 +1,14 @@
 import React, { Component } from "react";
+import { withChatInput, withMessages } from "./chat.hooks";
 
 // import logo from "./logo.svg";
 // import ChatEngineCore from "chat-engine";
 import "./App.css";
-import { getChatEngine } from './chat-engine';
+import { getChatEngine } from "./chat-engine";
 
 const ChatEngine = getChatEngine();
 
-class App extends Component {
+/*class App extends Component {
   constructor(props) {
     super(props);
     this.chatEngine = this.props.chatEngine;
@@ -68,9 +69,34 @@ class App extends Component {
       </div>
     );
   }
-}
-//const App = () => {
-//  return (<div>Hi</div>)
-// }
+}*/
+
+const App = () => {
+  const [chatInput, setChatInput] = withChatInput();
+  const [messages] = withMessages();
+  const sendChat = e => {
+    debugger;
+    ChatEngine.global.emit("message", {
+      text: e
+    });
+  };
+  return (
+    <div>
+       <ul>
+          {messages.map(n => {
+            return <li>{n.sender} - {n.text}</li>;
+          })}
+        </ul>
+      <input
+        id="chat-input"
+        type="text"
+        name=""
+        value={chatInput}
+        onChange={e => setChatInput(e.target.value)}
+      />
+      <input type="button" onClick={e => sendChat(chatInput)} value="Send Chat" />
+    </div>
+  );
+};
 
 export default App;
