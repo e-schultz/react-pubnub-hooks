@@ -1,10 +1,7 @@
-import React from "react";
-import { withChatInput, withMessages } from "./chat.hooks";
-
-import "./App.css";
-
-
-
+import React, { useContext } from 'react';
+import { withChatInput, withMessages } from './chat.hooks';
+import { ChatContext, ChatContextProvider, ChatConsumer } from './chat-engine';
+import './App.css';
 
 /*class App extends Component {
   constructor(props) {
@@ -71,19 +68,24 @@ import "./App.css";
 
 const App = () => {
   const [chatInput, setChatInput] = withChatInput();
-  const [messages, sendMessage] = withMessages();
-  
+  const [messages, sendMessage, chatEngine, isReady] = withMessages();
+  // const chatEngine = useContext(ChatContext);
   return (
     <div>
-      <ul>
-        {messages.map(n => {
-          return (
-            <li>
-              {n.sender} - {n.text}
-            </li>
-          );
-        })}
-      </ul>
+      {isReady ? (
+        <ul>
+          {messages.map(n => {
+            return (
+              <li>
+                {n.sender} - {n.text}
+              </li>
+            );
+          })}
+        </ul>
+      ) : (
+        <div>Not Ready</div>
+      )}
+
       <input
         id="chat-input"
         type="text"
