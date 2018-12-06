@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react';
-import { getChatEngine } from './chat-engine';
+import { useState, useEffect, useContext } from 'react';
 
-const ChatEngine = getChatEngine();
+import { ChatContext } from './chat-engine';
 
 export function withChatInput() {
   const [chatInput, setChatInput] = useState('');
@@ -11,6 +10,9 @@ export function withChatInput() {
 
 export function withMessages() {
   let [messages, setMessages] = useState([]);
+  let [isReady, setIsReady] = useState(false);
+
+  let chatEngine = useContext(ChatContext);
 
   const handleMessage = payload => {
     setMessages([
@@ -23,17 +25,25 @@ export function withMessages() {
   };
 
   useEffect(() => {
-    ChatEngine.global.on('message', handleMessage);
+    if (isReady) {
+      chatEngine.global.on('message', handleMessage);
 
-    return () => {
-      ChatEngine.global.off('message', handleMessage);
-    };
+      return () => {
+        chatEngine.global.off('message', handleMessage);
+      };
+    }
+  });
+
+  useEffect(() => {
+    chatEngine.on('$.ready', () => {
+      setIsReady(true);
+    });
   });
 
   function sendMessage(message) {
-    ChatEngine.global.emit('message', {
+    chatEngine.global.emit('message', {
       text: message
     });
   }
-  return [messages, sendMessage];
+  return [messages, sendMessage, chatEngine, isReady];
 }
