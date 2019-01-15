@@ -2,13 +2,13 @@ import { useState, useEffect, useContext } from 'react';
 
 import { ChatContext } from './chat-engine';
 
-export function withChatInput() {
+export function useChatInput() {
   const [chatInput, setChatInput] = useState('');
 
   return [chatInput, setChatInput];
 }
 
-export function withMessages() {
+export function useMessages() {
   let [messages, setMessages] = useState([]);
   let [isReady, setIsReady] = useState(false);
 
