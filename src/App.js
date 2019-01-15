@@ -1,11 +1,11 @@
 import React from 'react';
-import { withChatInput, withMessages } from './chat.hooks';
+import { useChatInput, useMessages } from './chat.hooks';
 import Messages from './Messages';
 import './App.css';
 
 const App = () => {
-  const [chatInput, setChatInput] = withChatInput();
-  const [messages, sendMessage, , isReady] = withMessages();
+  const [chatInput, setChatInput] = useChatInput();
+  const [messages, sendMessage, , isReady] = useMessages();
 
   return (
     <div>
