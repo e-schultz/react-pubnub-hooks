@@ -1,6 +1,6 @@
 import React from 'react';
 import { withChatInput, withMessages } from './chat.hooks';
-
+import Messages from './Messages';
 import './App.css';
 
 const App = () => {
@@ -9,32 +9,26 @@ const App = () => {
 
   return (
     <div>
-      {isReady ? (
-        <ul>
-          {messages.map(n => {
-            return (
-              <li>
-                {n.sender} - {n.text}
-              </li>
-            );
-          })}
-        </ul>
-      ) : (
+      {!isReady ? (
         <div>Not Ready</div>
-      )}
+      ) : (
+        <>
+          <Messages messages={messages} />
 
-      <input
-        id="chat-input"
-        type="text"
-        name=""
-        value={chatInput}
-        onChange={e => setChatInput(e.target.value)}
-      />
-      <input
-        type="button"
-        onClick={e => sendMessage(chatInput)}
-        value="Send Chat"
-      />
+          <input
+            id="chat-input"
+            type="text"
+            name=""
+            value={chatInput}
+            onChange={e => setChatInput(e.target.value)}
+          />
+          <input
+            type="button"
+            onClick={e => sendMessage(chatInput)}
+            value="Send Chat"
+          />
+        </>
+      )}
     </div>
   );
 };

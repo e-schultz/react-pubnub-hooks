@@ -1,8 +1,8 @@
 import ChatEngineCore from 'chat-engine';
 import React, { createContext } from 'react';
 
-const PUBLISH_KEY = 'pub-c-56d67766-dce8-4de5-9fc5-5cc93cb4752e';
-const SUBSCRIBE_KEY = 'sub-c-670dc974-f80b-11e8-a39c-e60c31199fb2';
+const PUBLISH_KEY = 'pub-c-9b914983-9487-4be5-a0e4-0c27a20e6572';
+const SUBSCRIBE_KEY = 'sub-c-acc8e784-cd70-11e8-b02a-a6a8b6327be1';
 
 const ChatContext = createContext();
 
